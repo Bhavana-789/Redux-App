@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
 import Login from './src/features/Login';
 import Home from './src/features/Home';
 import {NavigationContainer} from '@react-navigation/native';
