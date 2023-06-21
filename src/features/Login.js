@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
 import React, {useState} from 'react';
 import {
   View,
@@ -6,70 +6,78 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  StyleSheet,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {setUsername} from '../redux/loginSlice';
 
 const Login = ({navigation}) => {
-  const [usernameInput, setUsernameInput] = useState('');
-  const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    dispatch(setUsername(usernameInput));
+    if (username === '' && password === '') {
+      alert('Please enter username and password');
+      return;
+    }
     navigation.navigate('Home');
   };
+
   return (
-    <View style={{flex: 1, padding: 40, backgroundColor: '#f0fff0'}}>
+    <View style={styles.container}>
       <SafeAreaView>
-        <Text
-          style={{
-            marginTop: 60,
-            color: 'black',
-            fontSize: 30,
-            padding: 20,
-            textAlign: 'center',
-          }}>
-          Shopping Cart
-        </Text>
-        <View style={{}}>
+        <Text style={styles.heading}>Shopping Cart</Text>
+        <View>
           <TextInput
-            value={usernameInput}
-            onChangeText={text => setUsernameInput(text)}
-            style={{
-              borderWidth: 1,
-              marginBottom: 20,
-              height: 40,
-              borderRadius: 5,
-              paddingLeft: 10,
-            }}
+            value={username}
+            onChangeText={text => setUsername(text)}
+            style={styles.inputText}
             placeholder="Username"
           />
           <TextInput
-            style={{
-              borderWidth: 1,
-              height: 40,
-              borderRadius: 5,
-              paddingLeft: 10,
-            }}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            style={styles.inputText}
             placeholder="Password"
           />
         </View>
 
-        <TouchableOpacity
-          style={{
-            borderWidth: 1,
-            backgroundColor: '#8fbc8f',
-            padding: 10,
-            marginTop: 30,
-            borderRadius: 8,
-          }}
-          onPress={handleLogin}>
-          <Text style={{fontSize: 17, color: 'black', textAlign: 'center'}}>
-            Login
-          </Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 40,
+    backgroundColor: '#f0fff0',
+  },
+  heading: {
+    marginTop: 60,
+    color: 'black',
+    fontSize: 30,
+    padding: 20,
+    textAlign: 'center',
+  },
+  inputText: {
+    borderWidth: 1,
+    margin: 10,
+    height: 40,
+    borderRadius: 5,
+    padding: 10,
+  },
+  button: {
+    borderWidth: 1,
+    backgroundColor: '#8fbc8f',
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 8,
+  },
+  buttonText: {
+    fontSize: 17,
+    color: 'black',
+    textAlign: 'center',
+  },
+});
 export default Login;
